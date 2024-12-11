@@ -1,9 +1,9 @@
 import { Ticket } from "@prisma/client";
 import clsx from "clsx";
 import {
+  LucideArrowUpRightFromSquare,
+  LucideMoreVertical,
   LucidePencil,
-  LucideSquareArrowOutUpRight,
-  LucideTrash,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -16,8 +16,8 @@ import {
 } from "@/components/ui/card";
 import { ticketEditPath, ticketPath } from "@/paths";
 import { toCurrencyFromCent } from "@/utils/currency";
-import { deleteTicket } from "../actions/delete-ticket";
 import { TICKET_ICONS } from "../constants";
+import { TicketMoreMenu } from "./ticket-more-menu";
 
 type TicketItemProps = {
   ticket: Ticket;
@@ -28,7 +28,7 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
   const detailButton = (
     <Button variant="outline" size="icon" asChild>
       <Link prefetch href={ticketPath(ticket.id)}>
-        <LucideSquareArrowOutUpRight className="size-4" />
+        <LucideArrowUpRightFromSquare className="h-4 w-4" />
       </Link>
     </Button>
   );
@@ -36,17 +36,20 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
   const editButton = (
     <Button variant="outline" size="icon" asChild>
       <Link prefetch href={ticketEditPath(ticket.id)}>
-        <LucidePencil className="size-4" />
+        <LucidePencil className="h-4 w-4" />
       </Link>
     </Button>
   );
 
-  const deleteButton = (
-    <form action={deleteTicket.bind(null, ticket.id)}>
-      <Button variant="outline" size="icon">
-        <LucideTrash className="size-4" />
-      </Button>
-    </form>
+  const moreMenu = (
+    <TicketMoreMenu
+      ticket={ticket}
+      trigger={
+        <Button variant="outline" size="icon">
+          <LucideMoreVertical className="h-4 w-4" />
+        </Button>
+      }
+    />
   );
 
   return (
@@ -79,11 +82,12 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
           </p>
         </CardFooter>
       </Card>
+
       <div className="flex flex-col gap-y-1">
         {isDetail ? (
           <>
             {editButton}
-            {deleteButton}
+            {moreMenu}
           </>
         ) : (
           <>

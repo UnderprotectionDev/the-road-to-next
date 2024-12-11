@@ -1,4 +1,4 @@
-import { ActionState } from "./utils/to-action-state";
+import { ActionState } from "@/components/form/utils/to-action-state";
 
 type FieldErrorProps = {
   actionState: ActionState;
@@ -13,4 +13,4 @@ const FieldError = ({ actionState, name }: FieldErrorProps) => {
   return <span className="text-xs text-red-500">{message}</span>;
 };
 
-export default FieldError;
+export { FieldError };

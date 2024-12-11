@@ -1,22 +1,28 @@
-import { PrismaClient, TicketStatus } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 const tickets = [
   {
     title: "Ticket 1",
-    content: "This is the first ticket.",
-    status: TicketStatus.DONE,
+    content: "First ticket from DB.",
+    status: "DONE" as const,
+    deadline: new Date().toISOString().split("T")[0],
+    bounty: 499,
   },
   {
     title: "Ticket 2",
-    content: "This is the second ticket.",
-    status: TicketStatus.OPEN,
+    content: "Second ticket from DB.",
+    status: "OPEN" as const,
+    deadline: new Date().toISOString().split("T")[0],
+    bounty: 399,
   },
   {
     title: "Ticket 3",
-    content: "This is the third ticket.",
-    status: TicketStatus.IN_PROGRESS,
+    content: "Third ticket from DB.",
+    status: "IN_PROGRESS" as const,
+    deadline: new Date().toISOString().split("T")[0],
+    bounty: 599,
   },
 ];
 
